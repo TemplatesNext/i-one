@@ -125,7 +125,7 @@ function ione_setup() {
 		'video' 			 => true,
 		'image'              => false,
     );
-    add_theme_support( 'custom-header', $args );	
+    //add_theme_support( 'custom-header', $args );	
 	
 }
 add_action( 'after_setup_theme', 'ione_setup' );

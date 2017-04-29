@@ -25,8 +25,11 @@
 			$primary_color = "#e57e26";
 
 			$primary_color = esc_attr(get_theme_mod('primary_color', '#e57e26'));
-
 			
+			$header_bg_color = esc_attr(get_theme_mod('header_bg_color', '#333333'));
+			$header_link_color = esc_attr(get_theme_mod('header_link_color', '#FFFFFF'));
+			$header_title_color = esc_attr(get_theme_mod('header_title_color', '#FFFFFF'));
+			$header_desc_color = esc_attr(get_theme_mod('header_desc_color', '#eeeeee'));												
 
 			echo '<style type="text/css">'. "\n";
 			
@@ -90,7 +93,7 @@
 			
 			echo '.entry-title a { color: #141412;}';
 			
-			echo '.nav-container ul.nav-menu > li > ul a:hover { background-color:'.$primary_color.'; color: #FFF; }';
+			echo '.nav-container ul.nav-menu > li > ul a:hover, .utilitybar { background-color:'.$primary_color.'; color: #FFF; }';
 			
 			echo '.site-footer .widget-area .widget input[type="submit"],.site .tx-slider .tx-slide-button a,.ibanner .da-slider .owl-item.active .da-link  { background-color: '.$primary_color.'; color: #FFF; }';
 			echo '.site-footer .widget-area .widget input[type="submit"]:hover,.site .tx-slider .tx-slide-button a:hover  { background-color: #373737; color: #FFF; }';
@@ -107,6 +110,21 @@
 			
 			echo '.pagination .nav-links > span:hover,.pagination .nav-links > a:hover,.pagination .nav-links > span.current,.pagination .nav-links > a.current { 	color: '.$primary_color.';	border-color: '.$primary_color.'; text-decoration: none;}	';				
 		
+			echo '.txo-button-colored { background-color: '.$primary_color.'; border: 1px solid '.$primary_color.'; color: #FFF; }';
+			echo '.txo-button-colored:hover { background-color: #FFF; border: 1px solid '.$primary_color.'; color: '.$primary_color.'; }';
+
+			echo '.txo-button-colored-rev { background: transparent; border: 1px solid '.$primary_color.'; color: '.$primary_color.'; }';
+			echo '.txo-button-colored-rev:hover { background-color: '.$primary_color.'; border: 1px solid '.$primary_color.';	color: #fff; }';	
+			
+			echo '.headerwrap .site-header { background-color: '.$header_bg_color.'; border-bottom: none; }';
+			echo '.nav-container ul.nav-menu > li > a, .nav-container > ul > li > a { color: '.$header_link_color.'; }';
+			echo '.site-header .site-title, .site-header .site-title:hover { color: '.$header_title_color.'; }';
+			echo '.site-header .site-description { color: '.$header_desc_color.'; }';
+				
+			if( get_theme_mod( 'top_serach', 0 ) != 1) 	{
+				echo 'ul.nav-container, .nav-container > ul {padding-right: 0px;}';
+				echo 'ul.nav-container > li:last-child, .nav-container > ul > li:last-child {padding-right: 6px;}';
+			}	
 			
 			if ($custom_css) {
 			echo "\n".'/* =============== user styling =============== */'."\n";

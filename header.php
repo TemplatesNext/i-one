@@ -19,6 +19,7 @@ $top_phone = esc_attr(get_theme_mod('top_phone', ''));
 $top_email = esc_attr(get_theme_mod('top_email', ''));
 $ione_logo = get_theme_mod( 'logo', '' );
 $ione_logo_trans = get_theme_mod( 'logo-trans', '' );
+$top_search = get_theme_mod( 'top_serach', 0 );
 
 global $post; 
 
@@ -95,9 +96,11 @@ global $post;
 								?>
 							
                         </nav><!-- #site-navigation -->
+                        <?php if( $top_search == 1 ) : ?>
                         <div class="topsearch">
                             <?php get_search_form(); ?>
                         </div>
+                        <?php endif; ?>	
                     </div><!-- #navbar -->
                     <div class="clear"></div>
                 </div>

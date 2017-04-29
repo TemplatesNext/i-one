@@ -135,7 +135,13 @@ function ione_add_panels_and_sections( $wp_customize ) {
         'title'    => __('Default Blog Page', 'i-one'),
         'description' => '',
         'priority' => 180,
-    ));	
+    ));
+	
+    $wp_customize->add_section('customheader', array(
+        'title'    => __('Custom Header', 'i-one'),
+        'description' => '',
+        'priority' => 190,
+    ));		
 	
 	// slider sections
 	
@@ -206,7 +212,17 @@ function ione_custom_setting( $controls ) {
 		//'default'     => get_template_directory_uri() . '/images/logo-trans.png',
 		'default'     => '',
 		'priority'    => 1,
+	);
+	
+	$controls[] = array(
+		'type'        => 'switch',
+		'setting'     => 'top_serach',
+		'label'       => __( 'Turn ON/OFF Top Navigation Search Form', 'i-one' ),
+		'section'     => 'basic',
+		'default'     => 0,
+		'priority'    => 1,
 	);		
+	
 	
 	$controls[] = array(
 		'type'        => 'color',
@@ -527,8 +543,51 @@ function ione_custom_setting( $controls ) {
 			'max'  => '100',
 			'step' => '1',
 		),
-	);		
+	);
+	
+	// Blog page setting
+	
+	$controls[] = array(
+        'type'     => 'color',
+        'setting'  => 'header_bg_color',
+        'label'    => __( 'Header Background Color', 'txo' ),
+        'section'  => 'customheader',
+		'default'     => 'rgb(51, 51, 51)',
+		'priority'    => 1,
+		'alpha'       => false,
+	);
+	$controls[] = array(
+        'type'     => 'color',
+        'setting'  => 'header_link_color',
+        'label'    => __( 'Link Color', 'txo' ),
+        'section'  => 'customheader',
+		'default'     => 'rgb(255, 255, 255)',
+		'priority'    => 1,
+		'alpha'       => false,
+	);
+	$controls[] = array(
+        'type'     => 'color',
+        'setting'  => 'header_title_color',
+        'label'    => __( 'Site Title Color', 'txo' ),
+        'section'  => 'customheader',
+		'default'     => 'rgb(255, 255, 255)',
+		'priority'    => 1,
+		'alpha'       => false,
+	);
+	$controls[] = array(
+        'type'     => 'color',
+        'setting'  => 'header_desc_color',
+        'label'    => __( 'Site Description Color', 'txo' ),
+        'section'  => 'customheader',
+		'default'     => 'rgb(230, 230, 230)',
+		'priority'    => 1,
+		'alpha'       => false,
+	);			
 
+	
+
+	// Promo setting
+	
 	$controls[] = array(
 		'type'        => 'custom',
 		'settings'    => 'custom_demo',
