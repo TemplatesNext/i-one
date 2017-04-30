@@ -197,23 +197,14 @@ function ione_scripts_styles() {
 	// load masonry for footer and post layout
 	wp_enqueue_script( 'jquery-masonry' );	
 
-	// Loads JavaScript file with functionality specific to i-one.
-	//wp_enqueue_script( 'modernizer-custom', get_template_directory_uri() . '/js/modernizr.custom.js', array( 'jquery' ), '2014-01-13', true );
-	
 	// Loads JavaScript file for scroll related functions and animations.
 	wp_enqueue_script( 'waypoint', get_template_directory_uri() . '/js/waypoints.min.js', array( 'jquery' ), '2014-01-13', true );
-	
-	// Loads JavaScript file for small screen side menu.
-	wp_enqueue_script( 'sidr', get_template_directory_uri() . '/js/jquery.sidr.min.js', array( 'jquery' ), '2014-01-13', true );
 	
 	// Loads JavaScript file for jquery carousel
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl.carousel.min.js', array( 'jquery' ), '2014-01-13', true );
 	
 	// Loads JavaScript file for inview
 	wp_enqueue_script( 'inview', get_template_directory_uri() . '/js/jquery.inview.min.js', array( 'jquery' ), '1.1.2', true );		
-	
-	// Loads JavaScript file for pace preloader
-	//wp_enqueue_script( 'pace', get_template_directory_uri() . '/js/pace.min.js', array( 'jquery' ), '1.1.2', true );				
 	
 	// Loads JavaScript file with functionality specific to i-one.
 	wp_enqueue_script( 'ione-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '2013-07-18', true );
@@ -229,9 +220,6 @@ function ione_scripts_styles() {
 	
 	// Add Animate stle, used used for css animations.
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.min.css', array(), '2014-01-12' );
-	
-	// Add Animate stle, used used for side menu.
-	wp_enqueue_style( 'ione-sidr', get_template_directory_uri() . '/css/jquery.sidr.dark.css', array(), '2014-01-12' );	
 	
 	// Add owl-carusel style
 	wp_enqueue_style( 'owl-carousel', get_template_directory_uri() . '/css/owl.carousel.css', array(), '2014-01-12' );
@@ -249,11 +237,6 @@ function ione_scripts_styles() {
 	if ( $blog_layout == '2' ) {
 		wp_enqueue_style( 'i-one-blog-layout', get_template_directory_uri() . '/css/twocol-blog.css', array(), '2014-03-11' );	
 	}
-
-	// Loads the Internet Explorer specific stylesheet.
-	wp_enqueue_style( 'ione-ie', get_template_directory_uri() . '/css/ie.css', array( 'ione-style' ), '2013-07-18' );
-	wp_style_add_data( 'ione-ie', 'conditional', 'lt IE 9' );
-	
 	
 	wp_enqueue_style( 'i-one-extra-stylesheet', get_template_directory_uri() . '/css/extra-style.css', array(), '2014-03-11' );
 	$custom_css = wp_filter_nohtml_kses(get_theme_mod('extra_style', ''), '');
@@ -623,7 +606,6 @@ add_action( 'customize_controls_enqueue_scripts', 'ione_customizer_control' );
 /*-----------------------------------------------------------------------------------*/ 
 
 include( get_template_directory() . '/inc/tnext-meta.php' );
-
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 /*
@@ -639,7 +621,6 @@ if ( ! is_plugin_active( 'templatesnext-toolkit/tx-toolkit.php' ) && ! is_plugin
 /*-----------------------------------------------------------------------------------*/ 
 
 include get_template_directory() . '/inc/custom_functions.php';
-
 include get_template_directory() . '/inc/nx-custom-style.php';
 
 /*-----------------------------------------------------------------------------------*/
@@ -665,8 +646,15 @@ add_filter('excerpt_more', 'ione_excerpt_more');
 /*-----------------------------------------------------------------------------------*/
 /*	Adding customizer with kirki 
 /*-----------------------------------------------------------------------------------*/ 
-include_once( dirname( __FILE__ ) . '/nx-customizer.php' );
-include_once( dirname( __FILE__ ) . '/inc/kirki/kirki.php' );
+include_once( get_template_directory() . '/nx-customizer.php' );
+include_once( get_template_directory() . '/inc/kirki/kirki.php' );
+
+/*-----------------------------------------------------------------------------------*/
+/*	Adding Responsive Menu
+/*-----------------------------------------------------------------------------------*/ 
+include_once( get_template_directory() . '/inc/responsive-menu/responsive-menu-customizer.php' );
+include_once( get_template_directory() . '/inc/responsive-menu/responsive-menu.php' );
+
 
 /**
  * Add a stylesheet for admin panels

@@ -58,7 +58,8 @@ global $post;
                     <?php _e('Mail us : ','i-one'); ?> <?php echo sanitize_email($top_email); ?>
                 </div>
                 <?php endif; ?>                
-            </div> 
+            </div>
+            <div class="clear"></div> 
         </div>
         <?php endif; ?>
         

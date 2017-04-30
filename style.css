@@ -5195,6 +5195,7 @@ body.pace-done .site .pacer-cover {
 
 .home.home-slider-off .site .iheader .titlebar h1 {
 	font-size: 56px;
+	line-height: 64px;
 }
 
 #utilitybar.utilitybar {
@@ -5227,4 +5228,35 @@ body.pace-done .site .pacer-cover {
 
 .site-header .site-description {
 	color: #eee;
+}
+
+@media (max-width: 1200px) {
+
+}
+
+@media all and (max-width:800px) {
+	.home.home-slider-off .site .iheader .titlebar h1 {
+		font-size: 48px;
+		line-height: 56px;
+	}
+	
+	.socialicons {
+		display: block;
+		float: none;
+		width: 100%;
+		clear: both;
+		min-height: 28px;
+	}	
+}
+
+@media all and (max-width:480px) {
+	.home.home-slider-off .site .iheader .titlebar h1 {
+		font-size: 32px;
+		line-height: 36px;
+	}
+	
+	.socialicons {
+		display: block;
+		float: none;		
+	}
 }

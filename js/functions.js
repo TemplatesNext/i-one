@@ -89,65 +89,7 @@ jQuery(document).ready(function($) {
     });	
 	
 	
-	/* Side responsive menu	 */
-	$('.menu-toggle').sidr({
-      	name: 'sidr-left',
-      	side: 'left',
-		source: '.nav-container',
-			onOpen: function() {
-				$('.menu-toggle').animate({
-					marginLeft: "260px"
-				}, 200);
-			},
-			onClose: function() {
-				$('.menu-toggle').animate({
-					marginLeft: "0px"
-				}, 200);
-			}
-    });
-	
-	$(window).resize(function () {
-        if ($(window).width() > 1070) {
-            $.sidr('close', 'sidr-left');
-        }
-	  	equalheight('#ft-post article');
-    });	
-	
-	/*equal height for featured post for two column view */
-	
-	equalheight = function(container){
-	
-		var currentTallest = 0,
-			 currentRowStart = 0,
-			 rowDivs = new Array(),
-			 $el,
-			 topPosition = 0;
-		$(container).each(function() {
-		
-		   $el = $(this);
-		   $($el).height('auto')
-		   topPostion = $el.position().top;
-		
-		   	if (currentRowStart != topPostion) {
-				for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
-			   		rowDivs[currentDiv].height(currentTallest);
-			 	}
-			 	rowDivs.length = 0; // empty the array
-			 	currentRowStart = topPostion;
-			 	currentTallest = $el.height();
-			 	rowDivs.push($el);
-		   	} else {
-			 	rowDivs.push($el);
-			 	currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
-		  	}
-		   	for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
-			 	rowDivs[currentDiv].height(currentTallest);
-		   	}
-		});
-	}
 
-  	equalheight('.main article');
-	
 
 
 	/*
