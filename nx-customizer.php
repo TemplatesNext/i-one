@@ -202,7 +202,7 @@ function ione_custom_setting( $controls ) {
 		'default'     => '',		
 		'priority'    => 1,
 	);	
-	
+	/*
 	$controls[] = array(
 		'type'        => 'upload',
 		'setting'     => 'logo-trans',
@@ -213,7 +213,7 @@ function ione_custom_setting( $controls ) {
 		'default'     => '',
 		'priority'    => 1,
 	);
-	
+	*/
 	$controls[] = array(
 		'type'        => 'switch',
 		'setting'     => 'top_serach',

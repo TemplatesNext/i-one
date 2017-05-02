@@ -360,7 +360,7 @@ jQuery(document).ready(function($) {
 		}
 		
 		embed_code = '<iframe src="https://www.youtube.com/embed/'+video_id+'?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist='+video_id+'" frameborder="0" allowfullscreen></iframe>';
-		if( video_id ) {
+		if( video_id && $( window ).width() > 999 ) {
 			$(".video-foreground").append(embed_code);
 		}	
 	}

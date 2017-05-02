@@ -18,7 +18,7 @@ $top_email = '';
 $top_phone = esc_attr(get_theme_mod('top_phone', ''));
 $top_email = esc_attr(get_theme_mod('top_email', ''));
 $ione_logo = get_theme_mod( 'logo', '' );
-$ione_logo_trans = get_theme_mod( 'logo-trans', '' );
+//$ione_logo_trans = get_theme_mod( 'logo-trans', '' );
 $top_search = get_theme_mod( 'top_serach', 0 );
 
 global $post; 
@@ -70,7 +70,6 @@ global $post;
                         <a class="home-link" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
                             <span>
                             	<?php if ( $ione_logo ) : ?><img src="<?php echo esc_url($ione_logo); ?>" alt="<?php bloginfo( 'name' ); ?>" class="normal-logo" /> <?php endif; ?>
-                                <?php if ( $ione_logo_trans ) : ?><img src="<?php echo esc_url($ione_logo_trans); ?>" alt="<?php bloginfo( 'name' ); ?>" class="trans-logo" /><?php endif; ?>
                             </span>
                         </a>
                     <?php else : ?>

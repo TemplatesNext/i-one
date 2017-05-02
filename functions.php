@@ -713,8 +713,20 @@ function ione_register_required_plugins() {
         ),
          // This is an example of how to include a plugin from a private repo in your theme.
         array(
+            'name' => 'TemplatesNext OnePager', // The plugin name.
+            'slug' => 'templatesnext-onepager', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),
+         // This is an example of how to include a plugin from a private repo in your theme.
+        array(
             'name' => 'TemplatesNext ToolKit', // The plugin name.
             'slug' => 'templatesnext-toolkit', // The plugin slug (typically the folder name).
+            'required' => false, // If false, the plugin is only 'recommended' instead of required.
+        ),
+         // This is an example of how to include a plugin from a private repo in your theme.
+        array(
+            'name' => 'Customizer Export/Import', // The plugin name.
+            'slug' => 'customizer-export-import', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
         )		
 

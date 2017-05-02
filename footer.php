@@ -22,7 +22,7 @@
                 	<?php esc_attr_e( 'Copyright &copy;', 'i-one' ); ?>  <?php bloginfo( 'name' ); ?>
                 </div>            
             	<div class="credit-info">
-					<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'i-one' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'i-one' ); ?>">
+					<a href="<?php echo esc_url( __( 'http://wordpress.in/', 'i-one' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'i-one' ); ?>">
 						<?php printf( __( 'Powered by %s', 'i-one' ), 'WordPress' ); ?>
                     </a>
                     <?php printf( __( ', Designed and Developed by', 'i-one' )); ?> 
