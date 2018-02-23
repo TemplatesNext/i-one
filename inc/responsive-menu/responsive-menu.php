@@ -65,8 +65,7 @@ function ione_header_styles() {
 		?>
 		<style id="wprmenu_css" type="text/css" >
 			/* apply appearance settings */
-			.menu-toggle,
-			#navbar {
+			.menu-toggle {
 				display: none!important;
 			}
 			@media (max-width: 1069px) {
