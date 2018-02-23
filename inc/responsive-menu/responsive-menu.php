@@ -8,45 +8,40 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 // add required js/css files
-add_action( 'wp_enqueue_scripts', 'idesign_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'ione_enqueue_scripts' );
 
-function idesign_enqueue_scripts() {
+function ione_enqueue_scripts() {
 	wp_enqueue_style( 'responsive-menu', get_template_directory_uri() . '/inc/responsive-menu/css/wprmenu.css', array(), '1.01' );
+	wp_enqueue_script('jquery-transit', get_template_directory_uri() . '/inc/responsive-menu/js/jquery.transit.min.js', array( 'jquery' ), '2017-03-16', true );
 	
-	wp_enqueue_style('rmenu-font' , '//fonts.googleapis.com/css?family=Open+Sans:400,300,600' );
-	wp_enqueue_script('jquery.transit', get_template_directory_uri() . '/inc/responsive-menu/js/jquery.transit.min.js', array( 'jquery' ), '2017-03-16', true );
-	
-	//wp_enqueue_script('sidr', get_template_directory_uri() . '/inc/responsive-menu/js/waypoints.min.js', array( 'jquery' ), '2014-01-13', true );	
 	wp_enqueue_script('sidr', get_template_directory_uri() . '/inc/responsive-menu/js/jquery.sidr.js', array( 'jquery' ), '2017-03-16', true );
-	wp_enqueue_script('wprmenu.js', get_template_directory_uri() . '/inc/responsive-menu/js/wprmenu.js', array( 'jquery' ), '2017-03-16', true );	
+	wp_enqueue_script('ione-wprmenu', get_template_directory_uri() . '/inc/responsive-menu/js/wprmenu.js', array( 'jquery' ), '2017-03-16', true );	
 	
 	$wpr_options = array( 'zooming' => get_theme_mod('zooming', 'yes'),'from_width' => get_theme_mod('from_width', 1069),'swipe' => get_theme_mod('swipe', 'yes'));
-	wp_localize_script( 'wprmenu.js', 'wprmenu', $wpr_options );
+	wp_localize_script( 'ione-wprmenu', 'wprmenu', $wpr_options );
 }
 
-function wpr_search_form() {
-	return '<form role="search" method="get" class="wpr-search-form" action="' . site_url() . '"><label><input type="search" class="wpr-search-field" placeholder="' . get_theme_mod('search_box_text', __(' Search...', 'i-design')) . '" value="" name="s" title="Search for:"></label></form>';
-}
-
-add_action('wp_footer', 'idesign_menu', 100);
-function idesign_menu() {
+add_action('wp_footer', 'ione_menu', 100);
+function ione_menu() {
 	if( get_theme_mod('enabled', 1) ) :
 		?>
 		<div id="wprmenu_bar" class="wprmenu_bar">
-			<div class="wprmenu_icon">
-				<span class="wprmenu_ic_1"></span>
-				<span class="wprmenu_ic_2"></span>
-				<span class="wprmenu_ic_3"></span>
-			</div>
-			<div class="menu_title">
-				<?php echo esc_attr(get_theme_mod('bar_title', __('MENU', 'i-design'))); ?>
-			</div>
+        	<div class="wprmenu-inner">
+                <div class="wprmenu_icon">
+                    <span class="wprmenu_ic_1"></span>
+                    <span class="wprmenu_ic_2"></span>
+                    <span class="wprmenu_ic_3"></span>
+                </div>
+                <div class="menu_title">
+                    <?php echo esc_html(get_theme_mod('bar_title', __('MENU', 'i-one'))); ?>
+                </div>
+            </div>    
 		</div>
 
-		<div id="wprmenu_menu" class="wprmenu_levels <?php echo esc_attr(get_theme_mod('position', 'left')); ?> wprmenu_custom_icons">
+		<div id="wprmenu_menu" class="wprmenu_levels <?php echo esc_attr(get_theme_mod('position', 'top')); ?> wprmenu_custom_icons">
 			<?php if( get_theme_mod('search_box', 'below_menu') == 'above_menu' ) { ?> 
 			<div class="wpr_search">
-				<?php echo wpr_search_form(); ?>
+				<?php get_search_form(); ?>
 			</div>
 			<?php } ?>
 			<ul id="wprmenu_menu_ul">
@@ -56,7 +51,7 @@ function idesign_menu() {
 			</ul>
 			<?php if( get_theme_mod('search_box', 'below_menu') == 'below_menu' ) { ?> 
 			<div class="wpr_search">
-				<?php echo wpr_search_form(); ?>
+				<?php get_search_form(); ?>
 			</div>
 			<?php } ?>
 		</div>
@@ -65,21 +60,23 @@ function idesign_menu() {
 }
 
 
-function idesign_header_styles() {
+function ione_header_styles() {
 	if( get_theme_mod('enabled', 1) ) :
 		?>
 		<style id="wprmenu_css" type="text/css" >
 			/* apply appearance settings */
-			.menu-toggle {
+			.menu-toggle,
+			#navbar {
 				display: none!important;
 			}
 			@media (max-width: 1069px) {
-				.menu-toggle {
+				.menu-toggle,.topsearch,
+				#navbar {
 					display: none!important;
 				}				
 			}
 			#wprmenu_bar {
-				background: <?php echo esc_attr(get_theme_mod("bar_bgd", "#000000")); ?>;
+				background: <?php echo esc_attr(get_theme_mod("bar_bgd", "#e57e26")); ?>;
 			}
 			#wprmenu_bar .menu_title, #wprmenu_bar .wprmenu_icon_menu {
 				color: <?php echo esc_attr(get_theme_mod("bar_color", "#F2F2F2"));?>;
@@ -139,7 +136,17 @@ function idesign_header_styles() {
 			    right: -<?php echo esc_attr(get_theme_mod("how_wide", "80")); ?>%;
 			    left: auto;
 			}
-
+			#wprmenu_menu input.search-field {
+				padding: 6px 6px;
+				background-color: #999;
+				color: #333;
+				border: #666;
+				margin: 6px 6px;
+			}
+			#wprmenu_menu input.search-field:focus {
+				background-color: #CCC;
+				color: #000;
+			}			
 
 			<?php if( get_theme_mod("nesting_icon") ) : ?>
 				#wprmenu_menu .wprmenu_icon:before {
@@ -172,4 +179,4 @@ function idesign_header_styles() {
 		<?php
 	endif;
 }
-add_action('wp_head', 'idesign_header_styles');
+add_action('wp_head', 'ione_header_styles');

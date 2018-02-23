@@ -19,15 +19,15 @@
 			</div>
 			<div class="site-info">
                 <div class="copyright">
-                	<?php esc_attr_e( 'Copyright &copy;', 'i-one' ); ?>  <?php bloginfo( 'name' ); ?>
+                	<?php esc_html_e( 'Copyright &copy;', 'i-one' ); ?>  <?php bloginfo( 'name' ); ?>
                 </div>            
             	<div class="credit-info">
-					<a href="<?php echo esc_url( __( 'http://wordpress.in/', 'i-one' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'i-one' ); ?>">
-						<?php printf( __( 'Powered by %s', 'i-one' ), 'WordPress' ); ?>
+					<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'i-one' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'i-one' ); ?>">
+						<?php printf( esc_attr( 'Powered by %s', 'i-one' ), 'WordPress' ); ?>
                     </a>
-                    <?php printf( __( ', Designed and Developed by', 'i-one' )); ?> 
+                    <?php esc_attr_e( ', Designed and Developed by', 'i-one' ); ?> 
                     <a href="<?php echo esc_url( __( 'http://www.templatesnext.org/', 'i-one' ) ); ?>">
-                   		<?php printf( __( 'templatesnext', 'i-one' ) ); ?>
+                   		<?php esc_attr_e( 'templatesnext', 'i-one' ); ?>
                     </a>
                 </div>
 

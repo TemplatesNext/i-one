@@ -11,9 +11,9 @@ function ione_social_icons () {
 		$socio_list .= '<ul class="social">';	
 		foreach ( $services as $service ) :
 			
-			$active[$service] = esc_url( get_theme_mod('itrans_social_'.$service, '') );
+			$active[$service] = esc_url( get_theme_mod('itrans_social_'.$service, '#') );
 			if ($active[$service]) { 
-				$socio_list .= '<li><a href="'.$active[$service].'" title="'.$service.'" target="_blank"><i class="genericon socico genericon-'.$service.'"></i></a></li>';
+				$socio_list .= '<li><a href="'.$active[$service].'" title="'.esc_attr($service).'" target="_blank"><i class="genericon socico genericon-'.esc_attr($service).'"></i></a></li>';
 				$siciocount++;
 			}
 			
@@ -37,16 +37,18 @@ function ione_ibanner_slider () {
 	$slide_no = 1; 
 	$arrslidestxt = array();
 	
-	
 	$template_dir = get_template_directory_uri();
 	$banner_text = esc_attr(get_theme_mod('banner_text', ''));
+	$slider_height = intval(get_theme_mod('slider_height', 64));	
 	
 	$upload_dir = wp_upload_dir();
 	$upload_base_dir = $upload_dir['basedir'];
 	$upload_base_url = $upload_dir['baseurl'];
 	
 	$itrans_sliderparallax = get_theme_mod('itrans_sliderparallax', 1);
-	$itrans_slideroverlay = get_theme_mod('slider_overlay', 1);						
+	$itrans_slideroverlay = get_theme_mod('slider_overlay', 1);
+	$ubar_stat = get_theme_mod('slider_ubar', 1);
+	$shortcut_text = esc_attr__('Edit Slides', 'i-one');								
 			
 	if( $itrans_slideroverlay == 1 )
 	{
@@ -56,34 +58,42 @@ function ione_ibanner_slider () {
 		$overlayclass = "";
 	}	
 	
+	if( $ubar_stat == 0 )
+	{
+		$ubarclass = "hideubar";
+	} else
+	{
+		$ubarclass = "showubar";
+	}		
+	
 	$slides_preset = array (
         array(
-            'itrans_slide_title' => 'Welcome To i-one',
-            'itrans_slide_desc' => 'To start setting up i-one go to appearance > customize.',
-            'itrans_slide_linktext' => 'Know More',
+            'itrans_slide_title' => esc_attr__( 'Welcome To i-one', 'i-one' ),
+            'itrans_slide_desc' => esc_attr__( 'To start setting up i-one go to appearance > customize.', 'i-one' ),
+            'itrans_slide_linktext' => esc_attr__( 'Know More', 'i-one' ),
             'itrans_slide_linkurl' => '',
-            'itrans_slide_image' => get_template_directory_uri() . '/images/slide1.jpg',
+            'itrans_slide_image' => esc_url( get_template_directory_uri() . '/images/slide1.jpg' ),
         ),
         array(
-            'itrans_slide_title' => 'Responsive & Touch Ready',
-            'itrans_slide_desc' => 'i-one is 100% responsive and touch ready.',
-            'itrans_slide_linktext' => 'Know More',
+            'itrans_slide_title' => esc_attr__( 'Responsive & Touch Ready', 'i-one' ),
+            'itrans_slide_desc' => esc_attr__( 'i-one is 100% responsive and touch ready.', 'i-one' ),
+            'itrans_slide_linktext' => esc_attr__( 'Know More', 'i-one' ),
             'itrans_slide_linkurl' => '',
-            'itrans_slide_image' => get_template_directory_uri() . '/images/slide2.jpg',
+            'itrans_slide_image' => esc_url( get_template_directory_uri() . '/images/slide2.jpg' ),
         ),
         array(
-            'itrans_slide_title' => 'One Page Business WordPress Theme',
-            'itrans_slide_desc' => 'Extremely powerful and flexible one page WordPress business theme',
-            'itrans_slide_linktext' => 'Know More',
+            'itrans_slide_title' => esc_attr__( 'One Page WordPress Theme', 'i-one' ),
+            'itrans_slide_desc' => esc_attr__( 'Extremely powerful and flexible one-page multi-purpose WordPress theme', 'i-one' ),
+            'itrans_slide_linktext' => esc_attr__( 'Know More', 'i-one' ),
             'itrans_slide_linkurl' => '',
-            'itrans_slide_image' => get_template_directory_uri() . '/images/slide3.jpg',
+            'itrans_slide_image' => esc_url( get_template_directory_uri() . '/images/slide3.jpg' ),
         ),
         array(
-            'itrans_slide_title' => 'Easy to Customize',
-            'itrans_slide_desc' => 'All controls in one place, Setup your busines website in minutes..',
-            'itrans_slide_linktext' => 'Know More',
+            'itrans_slide_title' => esc_attr__( 'Easy to Customize', 'i-one' ),
+            'itrans_slide_desc' => esc_attr__( 'All controls in one place, Setup your busines website in minutes..', 'i-one' ),
+            'itrans_slide_linktext' => esc_attr__( 'Know More', 'i-one' ),
             'itrans_slide_linkurl' => '',
-            'itrans_slide_image' => get_template_directory_uri() . '/images/slide4.jpg',
+            'itrans_slide_image' => esc_url( get_template_directory_uri() . '/images/slide4.jpg' ),
         ),
 
 	);
@@ -134,8 +144,8 @@ function ione_ibanner_slider () {
 	$sliderscpeed = intval(esc_attr(get_theme_mod('itrans_sliderspeed', '6'))) * 1000 ;		
 	
 	if( count( $arrslidestxt) > 0 ){
-		echo '<div class="ibanner ' . $overlayclass . '">';
-		echo '	<div id="da-slider" class="da-slider" role="banner" data-slider-speed="'.$sliderscpeed.'" data-slider-parallax="'.$itrans_sliderparallax.'">';
+		echo '<div class="ibanner ' . esc_attr($overlayclass) . ' ' . esc_attr($ubarclass) . '">';
+		echo '	<div id="da-slider" class="da-slider" role="banner" data-slider-speed="'.esc_attr($sliderscpeed).'" data-slider-parallax="'.esc_attr($itrans_sliderparallax).'" data-edit-slides="'.esc_attr($shortcut_text).'" data-slider-height="'.esc_attr($slider_height).'">';
 			
 		foreach ( $arrslidestxt as $slidetxt ) :
 			echo '<div class="nx-slider">';	
@@ -196,45 +206,15 @@ function ione_get_attachment_id_from_url( $attachment_url = '' ) {
 }
 
 
-/*
- * add body class for i-one wpr menu
- *
- * @since i-one 1.0.1
- */
-add_filter( 'body_class', 'ione_wprm_body_class' );
-function ione_wprm_body_class( $classes ) {
-	
-	$hide_front_slider = get_theme_mod('slider_stat', 0);
-
-	if (function_exists('wprmenu_menu')) {
-    	$classes[] = 'wprm-on';	
-	}
-	
-	if ( is_front_page() && is_home() && $hide_front_slider == 0 ) {
-		$classes[] = 'home-slider-off';	
-	}	
-	
-	return $classes;
-}
-
 function ione_get_video_id( $video_url ){
 	
-	$video_id = ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $video_url, $match ) ) ? $match[1] : false;
-	return $video_id;
+	if( (preg_match('/http:\/\/(www\.)*youtube\.com\/.*/',$video_url)) || (preg_match('/http:\/\/(www\.)*youtu\.be\/.*/',$video_url)) )
+	{
+		$video_id = ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $video_url, $match ) ) ? $match[1] : false;
+		return $video_id;
+	} else
+	{
+		return false;
+	}
 }
 
-/**
- * add body class for i-one i-banner slider
- *
- * @since i-one 1.0.1
-
-add_filter( 'body_class', 'ione_ibanner_body_class' );
-function ione_ibanner_body_class( $classes ) {
-
-	$classes[] = 'ibanner-on';		
-
-	return $classes;
-}
-*/
-
-/**/

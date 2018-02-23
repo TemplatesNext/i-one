@@ -68,7 +68,6 @@ function ione_setup() {
 	 * specifically font, colors, icons, and column width.
 	 */
 	add_editor_style( array( 'css/editor-style.css', 'fonts/genericons.css', ione_fonts_url() ) );
-	//add_editor_style( array( 'css/admin-style.css', array(), '2016-05-22' ) );	
 
 	// Adds RSS feed links to <head> for posts and comments.
 	add_theme_support( 'automatic-feed-links' );
@@ -80,7 +79,7 @@ function ione_setup() {
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
 
 	// This theme uses wp_nav_menu() in one location.
-	register_nav_menu( 'primary', __( 'Navigation Menu', 'i-one' ) );
+	register_nav_menu( 'primary', esc_attr__( 'Navigation Menu', 'i-one' ) );
 	
 	// add title tag support since WordPress 4.1 
 	add_theme_support( 'title-tag' );		
@@ -101,6 +100,10 @@ function ione_setup() {
 	
 	// Add Support for woocommerce
 	add_theme_support( 'woocommerce' );	
+    add_theme_support( 'wc-product-gallery-zoom' );
+    add_theme_support( 'wc-product-gallery-lightbox' );
+    add_theme_support( 'wc-product-gallery-slider' );
+		
 	
 	$ione_defaults_bg = array(
 		'default-color'          => '#f3f1ed',
@@ -109,30 +112,33 @@ function ione_setup() {
 	);	
 	
 	add_theme_support( 'custom-background', $ione_defaults_bg );
-	
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );	
 
 	// This theme uses its own gallery styles.
 	add_filter( 'use_default_gallery_style', '__return_false' );
 	
-	//add_theme_support( 'custom-header', array( 'video' => true,	) );
+	// Add theme logo //
+	add_theme_support( 'custom-logo', array(
+		'height'      => 64,
+		'width'       => 280,
+		'flex-height' => true,
+		'flex-width'  => true,
+		'header-text' => array( 'site-title', 'site-description' ),
+	) );
 	
-    $args = array(
-        'default-image'      => get_template_directory_uri() . '/images/bg/bg6.jpg',
+	add_theme_support( 'customize-selective-refresh-widgets' );	
+	
+	$ione_defaults_header = array(
+        'default-image'      => get_template_directory_uri() . '/images/bg/bg7.jpg',
         'flex-width'         => true,
         'flex-height'        => true,
-		'video' 			 => true,
-		'image'              => false,
+		'video'				 => true,
+		'header-text'        => false, 
     );
-    //add_theme_support( 'custom-header', $args );	
+    add_theme_support( 'custom-header', $ione_defaults_header );	
 	
+		
 }
 add_action( 'after_setup_theme', 'ione_setup' );
-
-
-
-
 
 /**
  * Return the Google font stylesheet URL, if available.
@@ -152,22 +158,22 @@ function ione_fonts_url() {
 	 * into your own language.
 	 */
 	 //fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700|Roboto:400,400italic,500italic,700italic'
-	$source_sans_pro = _x( 'on', 'Source Sans Pro font: on or off', 'i-one' );
+	$open_sans = _x( 'on', 'Open Sans font: on or off', 'i-one' );
 
 	/* Translators: If there are characters in your language that are not
 	 * supported by Roboto, translate this to 'off'. Do not translate into your
 	 * own language.
 	 */
-	$poppins = _x( 'on', 'Poppins font: on or off', 'i-one' );
+	$roboto = _x( 'on', 'Roboto font: on or off', 'i-one' );
 
-	if ( 'off' !== $source_sans_pro || 'off' !== $poppins ) {
+	if ( 'off' !== $open_sans || 'off' !== $roboto ) {
 		$font_families = array();
 
-		if ( 'off' !== $source_sans_pro )
-			$font_families[] = 'Source Sans Pro:300,400,500,600,700,300italic,400italic,700italic';
+		if ( 'off' !== $open_sans )
+			$font_families[] = 'Open Sans:300,400,700,300italic,400italic,700italic';
 
-		if ( 'off' !== $poppins )
-			$font_families[] = 'Poppins:300,400,500,600,700';
+		if ( 'off' !== $roboto )
+			$font_families[] = 'Roboto:300,400,700';
 
 		$query_args = array(
 			'family' => urlencode( implode( '|', $font_families ) ),
@@ -198,7 +204,7 @@ function ione_scripts_styles() {
 	wp_enqueue_script( 'jquery-masonry' );	
 
 	// Loads JavaScript file for scroll related functions and animations.
-	wp_enqueue_script( 'waypoint', get_template_directory_uri() . '/js/waypoints.min.js', array( 'jquery' ), '2014-01-13', true );
+	wp_enqueue_script( 'ione-waypoint', get_template_directory_uri() . '/js/waypoints.min.js', array( 'jquery' ), '2014-01-13', true );
 	
 	// Loads JavaScript file for jquery carousel
 	wp_enqueue_script( 'owl-carousel', get_template_directory_uri() . '/js/owl.carousel.min.js', array( 'jquery' ), '2014-01-13', true );
@@ -207,7 +213,7 @@ function ione_scripts_styles() {
 	wp_enqueue_script( 'inview', get_template_directory_uri() . '/js/jquery.inview.min.js', array( 'jquery' ), '1.1.2', true );		
 	
 	// Loads JavaScript file with functionality specific to i-one.
-	wp_enqueue_script( 'ione-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '2013-07-18', true );
+	wp_enqueue_script( 'ione-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '1.0.7', true );
 	
 	
 	$blog_layout = get_theme_mod('blog_layout', '2');
@@ -228,47 +234,18 @@ function ione_scripts_styles() {
 	wp_enqueue_style( 'owl-carousel-theme', get_template_directory_uri() . '/css/owl.theme.css', array(), '2014-01-12' );	
 	
 	// Add owl-carusel transition
-	wp_enqueue_style( 'owl-carousel-transitions', get_template_directory_uri() . '/css/owl.transitions.css', array(), '2014-01-12' );				
+	wp_enqueue_style( 'owl-carousel-transitions', get_template_directory_uri() . '/css/owl.transitions.css', array(), '2016-01-12' );				
 	
 	// Loads our main stylesheet.
-	wp_enqueue_style( 'ione-style', get_stylesheet_uri(), array(), '2013-07-18' );
+	wp_enqueue_style( 'ione-style', get_stylesheet_uri(), array(), '1.0.7' );
 	
 	// blog posts layout style
 	if ( $blog_layout == '2' ) {
-		wp_enqueue_style( 'i-one-blog-layout', get_template_directory_uri() . '/css/twocol-blog.css', array(), '2014-03-11' );	
+		wp_enqueue_style( 'ione-blog-layout', get_template_directory_uri() . '/css/twocol-blog.css', array(), '2016-03-11' );	
 	}
-	
-	wp_enqueue_style( 'i-one-extra-stylesheet', get_template_directory_uri() . '/css/extra-style.css', array(), '2014-03-11' );
-	$custom_css = wp_filter_nohtml_kses(get_theme_mod('extra_style', ''), '');
-	
-	if ( $custom_css ) {
-		wp_add_inline_style( 'i-one-extra-stylesheet', $custom_css );
-	}
+
 }
 add_action( 'wp_enqueue_scripts', 'ione_scripts_styles' );
-
-
-/**
- * add body class for boxed layout.
- *
- * @since i-one 1.0
- */
-add_filter( 'body_class', 'ione_layout_body_class' );
-function ione_layout_body_class( $classes ) {
-	// add 'class-name' to the $classes array
-	
-	if ( get_theme_mod('wide_layout', '1') != 0 )
-	{
-		$classes[] = 'nx-wide';		
-	} else
-	{
-		$classes[] = 'nx-boxed';
-	}
-	
-	// return the $classes array
-	return $classes;
-}
-
 
 /**
  * Register two widget areas.
@@ -279,9 +256,9 @@ function ione_layout_body_class( $classes ) {
  */
 function ione_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Main Widget Area', 'i-one' ),
+		'name'          => esc_attr__( 'Main Widget Area', 'i-one' ),
 		'id'            => 'sidebar-1',
-		'description'   => __( 'Appears in the footer section of the site.', 'i-one' ),
+		'description'   => esc_attr__( 'Appears in the footer section of the site.', 'i-one' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
@@ -289,9 +266,9 @@ function ione_widgets_init() {
 	) );
 
 	register_sidebar( array(
-		'name'          => __( 'Main Sidebar Widget Area', 'i-one' ),
+		'name'          => esc_attr__( 'Main Sidebar Widget Area', 'i-one' ),
 		'id'            => 'sidebar-2',
-		'description'   => __( 'Appears on posts and pages in the sidebar.', 'i-one' ),
+		'description'   => esc_attr__( 'Appears on posts and pages in the sidebar.', 'i-one' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h3 class="widget-title">',
@@ -300,7 +277,6 @@ function ione_widgets_init() {
     
 }
 add_action( 'widgets_init', 'ione_widgets_init' );
-
 
 
 if ( ! function_exists( 'ione_post_nav' ) ) :
@@ -322,7 +298,7 @@ function ione_post_nav() {
 		return;
 	?>
 	<nav class="navigation post-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'i-one' ); ?></h1>
+		<h1 class="screen-reader-text"><?php esc_attr_e( 'Post navigation', 'i-one' ); ?></h1>
 		<div class="nav-links">
 
 			<?php previous_post_link( '%link', _x( '<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'i-one' ) ); ?>
@@ -333,22 +309,6 @@ function ione_post_nav() {
 	<?php
 }
 endif;
-
-
-// Add specific CSS class by filter
-
-add_filter( 'body_class', 'ione_twocol_blog_body_class' );
-function ione_twocol_blog_body_class( $classes ) {
-
-	if ( get_theme_mod('blog_layout', '2') == '2' ) {
-		$classes[] = 'twocol-blog';
-	} else
-	{
-		$classes[] = 'onecol-blog';
-	}
-	return $classes;
-}
-
 
 
 
@@ -364,19 +324,19 @@ if ( ! function_exists( 'ione_entry_meta' ) ) :
  */
 function ione_entry_meta() {
 	if ( is_sticky() && is_home() && ! is_paged() )
-		echo '<span class="featured-post">' . __( 'Sticky', 'i-one' ) . '</span>';
+		echo '<span class="featured-post">' . esc_attr( 'Sticky', 'i-one' ) . '</span>';
 
 	if ( ! has_post_format( 'link' ) && 'post' == get_post_type() )
 		ione_entry_date();
 
 	// Translators: used between list items, there is a space after the comma.
-	$categories_list = get_the_category_list( __( ', ', 'i-one' ) );
+	$categories_list = get_the_category_list( esc_attr__( ', ', 'i-one' ) );
 	if ( $categories_list ) {
 		echo '<span class="categories-links">' . $categories_list . '</span>';
 	}
 
 	// Translators: used between list items, there is a space after the comma.
-	$tag_list = get_the_tag_list( '', __( ', ', 'i-one' ) );
+	$tag_list = get_the_tag_list( '', esc_attr__( ', ', 'i-one' ) );
 	if ( $tag_list ) {
 		echo '<span class="tags-links">' . $tag_list . '</span>';
 	}
@@ -530,27 +490,41 @@ function ione_body_class( $classes ) {
 
 	if ( ! get_option( 'show_avatars' ) )
 		$classes[] = 'no-avatars';
+		
+	//class assignment based on blog layout
+	if ( get_theme_mod('blog_layout', '2') == '2' ) {
+		$classes[] = 'twocol-blog';
+	} else
+	{
+		$classes[] = 'onecol-blog';
+	}
+	
+	if ( get_theme_mod('wide_layout', '1') != 0 )
+	{
+		$classes[] = 'nx-wide';		
+	} else
+	{
+		$classes[] = 'nx-boxed';
+	}	
 
+	$hide_front_slider = get_theme_mod('slider_stat', 0);
+	if ( ( is_home() && $hide_front_slider == 0 ) || ( is_front_page() && $hide_front_slider == 0 )  ) {
+		$classes[] = 'home-slider-off';	
+	} else
+	{
+		$classes[] = 'home-slider-on';
+	}
+	
+	// Add PreLoader Class
+	if( get_theme_mod('pre_loader', 0) == 1 )
+	{
+		$classes[] = 'nx-preloader';
+	}	
+	
 	return $classes;
 }
 add_filter( 'body_class', 'ione_body_class' );
 
-/**
- * Adjust content_width value for video post formats and attachment templates.
- *
- * @since i-one 1.0
- *
- * @return void
- */
-function ione_content_width() {
-	global $content_width;
-
-	if ( is_attachment() )
-		$content_width = 724;
-	elseif ( has_post_format( 'audio' ) )
-		$content_width = 484;
-}
-add_action( 'template_redirect', 'ione_content_width' );
 
 /**
  * Add postMessage support for site title and description for the Customizer.
@@ -563,18 +537,44 @@ add_action( 'template_redirect', 'ione_content_width' );
 function ione_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
-	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
-
+	//$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+	
+	
 	$wp_customize->selective_refresh->add_partial( 'basic', array(
-		'selector' => '.headerinnerwrap .home-link',
-		'settings' => array( 'logo' ),
+			'selector' => '.headerinnerwrap .home-link',
+			'settings' => array( 'custom_logo' ),
+	));
+	$wp_customize->selective_refresh->add_partial( 'hidesearch', array(
+		'selector' => '.navbar .topsearch',
+		'settings' => array( 'show_search' ),
 	) );
-
+	/*
+	$wp_customize->selective_refresh->add_partial( 'slidersettings', array(
+		'selector' => '.nx-slider .nx-slider-container',
+		'settings' => array( 'slidersettings' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );
+	*/
+	$wp_customize->selective_refresh->add_partial( 'basic-1', array(
+		'selector' => '.tx-topphone',
+		'settings' => array( 'top_phone' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );
+	
+	$wp_customize->selective_refresh->add_partial( 'basic-2', array(
+		'selector' => '.tx-topmail',
+		'settings' => array( 'top_email' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );	
+	
+	$wp_customize->selective_refresh->add_partial( 'social-icons', array(
+		'selector' => '.socialicons',
+		'settings' => array( 'itrans_social_facebook' ),
+		//'render_callback' => 'twentyfifteen_customize_partial_blogname',
+	) );	
+	
 }
 add_action( 'customize_register', 'ione_customize_register' );
-
-
-
 
 /**
  * Enqueue Javascript postMessage handlers for the Customizer.
@@ -589,10 +589,9 @@ add_action( 'customize_register', 'ione_customize_register' );
  
 
 function ione_customize_preview_js() {
-	wp_enqueue_script( 'ione-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130227', true );
+	wp_enqueue_script( 'ione-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20130226', true );
 }
 add_action( 'customize_preview_init', 'ione_customize_preview_js' );
-
 
 function ione_customizer_control() {
     wp_enqueue_script('customize_control_init', get_template_directory_uri() . '/js/theme-customizer-control.js', array( 'jquery' ), '1.0.2', true ); 
@@ -600,27 +599,21 @@ function ione_customizer_control() {
 add_action( 'customize_controls_enqueue_scripts', 'ione_customizer_control' );
 
 
-
 /*-----------------------------------------------------------------------------------*/
 /*	Metabox
 /*-----------------------------------------------------------------------------------*/ 
 
-include( get_template_directory() . '/inc/tnext-meta.php' );
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-/*
-// check for plugin using plugin name
-if ( ! is_plugin_active( 'templatesnext-toolkit/tx-toolkit.php' ) && ! is_plugin_active( 'meta-box/meta-box.php' ) ) 
-{
-	require_once( get_template_directory() . '/inc/meta-box/meta-box.php' );
+if ( function_exists( 'rwmb_meta' ) ) {
+	include( get_template_directory() . '/inc/tnext-meta.php' );
 }
-*/
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Functions
 /*-----------------------------------------------------------------------------------*/ 
 
 include get_template_directory() . '/inc/custom_functions.php';
+
 include get_template_directory() . '/inc/nx-custom-style.php';
 
 /*-----------------------------------------------------------------------------------*/
@@ -628,6 +621,9 @@ include get_template_directory() . '/inc/nx-custom-style.php';
 /*-----------------------------------------------------------------------------------*/ 
 
 function ione_excerpt_length($length) {
+	if ( is_admin() ) {
+		return $length;
+	}	
 	return 32;
 }
 add_filter('excerpt_length', 'ione_excerpt_length');
@@ -637,48 +633,52 @@ add_filter('excerpt_length', 'ione_excerpt_length');
 /*	changing changing default read more text 
 /*-----------------------------------------------------------------------------------*/ 
 function ione_excerpt_more($more) {
-       global $post;
-	return '<a class="moretag" href="'. get_permalink($post->ID) . '">'. __( 'Read More...', 'i-one' ). '</a>';
+	if ( is_admin() ) {
+		return $more;
+	}	
+    global $post;
+	//return '<a class="moretag" href="'. get_permalink($post->ID) . '">'. __( 'Read More...', 'i-one' ). '</a>';
+	return '';
 }
-add_filter('excerpt_more', 'ione_excerpt_more');
+add_filter('excerpt_more', 'ione_excerpt_more', 21);
+
+/**/
+function ione_excerpt_more_link( $excerpt ){
+    $post = get_post();
+    $excerpt .= '<a class="moretag noptoppad" href="'. get_permalink($post->ID) . '">' . esc_attr__( 'Read More...', 'i-one' ) . '</a>';
+    return $excerpt;
+}
+add_filter( 'the_excerpt', 'ione_excerpt_more_link', 21 );
 
 
 /*-----------------------------------------------------------------------------------*/
 /*	Adding customizer with kirki 
 /*-----------------------------------------------------------------------------------*/ 
-include_once( get_template_directory() . '/nx-customizer.php' );
-include_once( get_template_directory() . '/inc/kirki/kirki.php' );
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+include get_template_directory() . '/nx-customizer.php';
+
+if ( !class_exists( 'Kirki' ) ) {
+	include get_template_directory() . '/inc/kirki/kirki.php';
+}
 
 /*-----------------------------------------------------------------------------------*/
-/*	Adding Responsive Menu
-/*-----------------------------------------------------------------------------------*/ 
-include_once( get_template_directory() . '/inc/responsive-menu/responsive-menu-customizer.php' );
-include_once( get_template_directory() . '/inc/responsive-menu/responsive-menu.php' );
+/*	Adding Responsive menu
+/*-----------------------------------------------------------------------------------*/
+include get_template_directory() . '/inc/responsive-menu/responsive-menu.php';
+
 
 
 /**
- * Add a stylesheet for admin panels
- * @since i-one 1.0
+ * Enqueue the customizer stylesheet.
  */
-add_action('admin_init', 'ione_admin_css');
-function ione_admin_css() {
-   wp_register_style( 'ione-admin-css', get_template_directory_uri() . '/css/admin-style.css' );
-   wp_enqueue_style( 'ione-admin-css' );
-}
+function ione_enqueue_customizer_stylesheet() {
 
-add_action( 'admin_enqueue_scripts', 'ione_admin_js' );
-function ione_admin_js() {
-    wp_enqueue_script( 'ione_admin_script', get_template_directory_uri() . '/js/admin-script.js' );
-}
+	wp_register_style( 'ione-customizer-css', get_template_directory_uri() . '/css/admin-style.css', NULL, NULL, 'all' );
+	wp_enqueue_style( 'ione-customizer-css' );
 
-
-/*
-Kirki Style
-function mytheme_kirki_configuration() {
-    return array( 'url_path'     => get_stylesheet_directory_uri() . '/inc/kirki/' );
 }
-add_filter( 'kirki/config', 'mytheme_kirki_configuration' );
-*/
+add_action( 'customize_controls_print_styles', 'ione_enqueue_customizer_stylesheet' );
 
 /*
  * Loads the Options Panel
@@ -694,7 +694,7 @@ function ione_remove_wc_breadcrumbs() {
 }
 
 // Adding TGM Plugin activation
-require_once dirname( __FILE__ ) . '/inc/class-tgm-plugin-activation.php';
+require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
 
 add_action( 'tgmpa_register', 'ione_register_required_plugins' );
 function ione_register_required_plugins() {
@@ -715,18 +715,6 @@ function ione_register_required_plugins() {
         array(
             'name' => 'TemplatesNext OnePager', // The plugin name.
             'slug' => 'templatesnext-onepager', // The plugin slug (typically the folder name).
-            'required' => false, // If false, the plugin is only 'recommended' instead of required.
-        ),
-         // This is an example of how to include a plugin from a private repo in your theme.
-        array(
-            'name' => 'TemplatesNext ToolKit', // The plugin name.
-            'slug' => 'templatesnext-toolkit', // The plugin slug (typically the folder name).
-            'required' => false, // If false, the plugin is only 'recommended' instead of required.
-        ),
-         // This is an example of how to include a plugin from a private repo in your theme.
-        array(
-            'name' => 'Customizer Export/Import', // The plugin name.
-            'slug' => 'customizer-export-import', // The plugin slug (typically the folder name).
             'required' => false, // If false, the plugin is only 'recommended' instead of required.
         )		
 
@@ -749,9 +737,9 @@ function ione_register_required_plugins() {
         'is_automatic' => false, // Automatically activate plugins after installation or not.
         'message' => '', // Message to output right before the plugins table.
         'strings' => array(
-            'page_title' => __( 'Install Required Plugins', 'i-one' ),
-            'menu_title' => __( 'Install Plugins', 'i-one' ),
-            'installing' => __( 'Installing Plugin: %s', 'i-one' ), // %s = plugin name.
+            'page_title' => esc_attr__( 'Install Required Plugins', 'i-one' ),
+            'menu_title' => esc_attr__( 'Install Plugins', 'i-one' ),
+            'installing' => esc_attr__( 'Installing Plugin: %s', 'i-one' ), // %s = plugin name.
             'oops' => __( 'Something went wrong with the plugin API.', 'i-one' ),
             'notice_can_install_required' => _n_noop( 'This theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.', 'i-one' ), // %1$s = plugin name(s).
             'notice_can_install_recommended' => _n_noop( 'This theme recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.', 'i-one' ), // %1$s = plugin name(s).
@@ -763,9 +751,9 @@ function ione_register_required_plugins() {
             'notice_cannot_update' => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', 'i-one' ), // %1$s = plugin name(s).
             'install_link' => _n_noop( 'Begin installing plugin', 'Begin installing plugins', 'i-one' ),
             'activate_link' => _n_noop( 'Begin activating plugin', 'Begin activating plugins', 'i-one' ),
-            'return' => __( 'Return to Required Plugins Installer', 'i-one' ),
-            'plugin_activated' => __( 'Plugin activated successfully.', 'i-one' ),
-            'complete' => __( 'All plugins installed and activated successfully. %s', 'i-one' ), // %s = dashboard link.
+            'return' => esc_attr__( 'Return to Required Plugins Installer', 'i-one' ),
+            'plugin_activated' => esc_attr__( 'Plugin activated successfully.', 'i-one' ),
+            'complete' => esc_attr__( 'All plugins installed and activated successfully. %s', 'i-one' ), // %s = dashboard link.
             'nag_type' => 'updated' // Determines admin notice type - can only be 'updated', 'update-nag' or 'error'.
         )
     );

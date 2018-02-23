@@ -59,7 +59,7 @@ The top Bar that shows/hides the menu
 	width:100%;
 	display: none;
 	cursor: pointer;
-	z-index: 98;
+	z-index: 30002;
 	overflow: hidden;
 	height:42px;
 	display: none;
@@ -162,7 +162,7 @@ body { position: relative!important; }
 	width:100%;
 	display: none;
 	position: relative;
-	z-index: 9999;
+	z-index: 30012;
 }
 #wprmenu_menu.left, #wprmenu_menu.right {
     display: none;
@@ -170,7 +170,7 @@ body { position: relative!important; }
     position: fixed;
     top: 0px;
     height: 100%;
-    z-index: 97;
+	z-index: 30003;
     overflow-x: none;
     overflow-y: auto;
     background: #2E2E2E;
